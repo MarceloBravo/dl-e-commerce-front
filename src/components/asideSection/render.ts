@@ -18,7 +18,9 @@ export class Render {
         const htmlString = `
             <section>
                 <h3>${this.title}</h3>
+                <div class="aside-options">
                 ${this.options.map(({ label, checked }) => `<label><input type="${this.type}" ${checked ? 'checked' : ''} /> ${label}</label>`).join('')}
+                </div>
             </section>
         `;
         // Parseamos la cadena a un DocumentFragment (conjunto de nodos DOM)
