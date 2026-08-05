@@ -5,14 +5,17 @@ import { ProductService } from './services/productService';
 import { categoriesService } from './services/categoriesService';
 import type { ResponseInterface } from './interfaces/responseInterface';
 let optionsCategories: string='[]';
+let productsArray: any[] = [];
 
 const getData = async () => {
   const products: ResponseInterface = await ProductService.getAll();
   console.log('Products:', products);
   const categories: ResponseInterface = await categoriesService.getAll();
-  console.log('Categories:', categories);
   optionsCategories = categories.data.map((category: any) => `{"label":"${category.slug}","type":"checkbox","checked":false}`).join(',');
-  document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+  productsArray = products.products; //.map((product: any) => `{"label":"${product.title}","type":"checkbox","checked":false}`).join(',');
+  console.log('Array Products:', productsArray);
+
+  const htmlString = `
     <div class="page-shell">
       <nav-bar ShopName="Tienda on-line" slogan="Encuentra lo mejor para tu hogar"></nav-bar>
 
@@ -46,33 +49,14 @@ const getData = async () => {
           </div>
 
           <div class="products-grid">
-            <article class="product-card">
-              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Auriculares inalámbricos" />
-              <h3>Auriculares inalámbricos</h3>
-              <p>Sonido premium y batería de larga duración.</p>
-              <strong>$79.990</strong>
-            </article>
-
-            <article class="product-card">
-              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Reloj inteligente" />
-              <h3>Reloj inteligente</h3>
-              <p>Monitorea tu salud y tus actividades diarias.</p>
-              <strong>$89.990</strong>
-            </article>
-
-            <article class="product-card">
-              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Audífonos sobre la oreja" />
-              <h3>Audífonos premium</h3>
-              <p>Diseño cómodo y audio envolvente.</p>
-              <strong>$69.990</strong>
-            </article>
-
-            <article class="product-card">
-              <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" alt="Smartphone" />
-              <h3>Smartphone</h3>
-              <p>Rendimiento rápido y cámara de alta calidad.</p>
-              <strong>$129.990</strong>
-            </article>
+            ${productsArray.map((product: any) => `
+              <product-card
+                img="${product.thumbnail}"
+                title="${product.title}"
+                description="${product.description}"
+                price="${product.price}"
+              ></product-card>
+            `).join('')}
           </div>
         </section>
       </main>
@@ -84,7 +68,9 @@ const getData = async () => {
         email="contacto@tiendaonline.cl"/>
     </div>
   `;
+
+  const fragmento: DocumentFragment = document.createRange().createContextualFragment(htmlString);
+  document.querySelector<HTMLDivElement>('#app')!.replaceChildren(fragmento);
 }
 
 getData();
-

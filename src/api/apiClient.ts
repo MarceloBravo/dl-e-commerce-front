@@ -23,7 +23,7 @@ export const apiClient = async (endpoint: string, options: RequestInit = {}): Pr
     const ok = response.ok;
     const status = response.status;
     const resp = await response.json();
-    resp.data = resp;
+    resp.data = resp.products ? resp.products : resp;
     resp.ok = ok;
     resp.status = status;
     return resp;
