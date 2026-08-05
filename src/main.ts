@@ -1,5 +1,5 @@
 import './style.css'
-import { NavBar, AsideSection, Footer } from './components';
+import { NavBar, AsideSection, Footer, Pagination } from './components';
 
 import { ProductService } from './services/productService';
 import { categoriesService } from './services/categoriesService';
@@ -58,6 +58,7 @@ const getData = async () => {
               ></product-card>
             `).join('')}
           </div>
+          <pagination-nav total-pages="${productsArray.length}" active-page="1"></pagination-nav> 
         </section>
       </main>
 

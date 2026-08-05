@@ -1,13 +1,14 @@
 import type { AsideOptions } from '../../interfaces/asideOptions';
+import { InputTypeEnum } from '../../enum/inputTypeEnum';
 import styles from './style.css?inline';
 
 export class Render {
     private root: ShadowRoot;
-    private type: string;
+    private type: InputTypeEnum;
     private title: string
     private options: AsideOptions[];
 
-    constructor(root: ShadowRoot, title: string, type: string, options: AsideOptions[]) {
+    constructor(root: ShadowRoot, title: string, type: InputTypeEnum, options: AsideOptions[]) {
         this.root = root;
         this.type = type;
         this.title = title;
@@ -19,7 +20,13 @@ export class Render {
             <section>
                 <h3>${this.title}</h3>
                 <div class="aside-options">
-                ${this.options.map(({ label, checked }) => `<label><input type="${this.type}" ${checked ? 'checked' : ''} /> ${label}</label>`).join('')}
+                ${this.options.map(({ label, checked }) => `
+                    <label>
+                        <input 
+                            name="${this.type === InputTypeEnum.CHECKBOX ? label : this.title}"
+                            type="${this.type}" ${checked ? 'checked' : ''} /> 
+                            ${label}
+                        </label>`).join('')}
                 </div>
             </section>
         `;
