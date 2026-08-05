@@ -7,21 +7,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
     padding: 1rem 0;
 }
 
 .page-list {
     display: flex;
-    gap: 0.5rem;
 }
 
 button {
     border: 1px solid #d1d5db;
     background-color: #ffffff;
     color: #111827;
-    padding: 0.7rem 1rem;
-    border-radius: 0.75rem;
+    padding: 0.5rem;
     font-size: 0.95rem;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -45,8 +42,8 @@ button:disabled {
 }
 
 .page-button.active {
-    background-color: #4338ca;
-    border-color: #4338ca;
+    background-color: #2160b9;
+    border-color: #2160b9;
     color: #ffffff;
     font-weight: 700;
 }
