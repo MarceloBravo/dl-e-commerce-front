@@ -9,7 +9,6 @@ export class HomePage extends HTMLElement {
 
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
     }
 
     /**
@@ -37,6 +36,7 @@ export class HomePage extends HTMLElement {
      * Se ejecuta cuando el componente se inserta en el DOM.
      */
     connectedCallback() {
+        this.classList.add('contact-page');
         this.render();
     }
 
@@ -53,15 +53,11 @@ export class HomePage extends HTMLElement {
      * Genera el HTML y aplica el CSS del componente dentro de su shadow DOM.
      */
     render = async () => {
-        const root: ShadowRoot | null = this.shadowRoot;
-
-        if (!root) {
-            return;
-        }
+        
 
         const {optionsCategories, productsArray} = await this.loadData();
         const title: string = this.getAttribute('title') || 'Home';
-        const template = new Template(root, title, optionsCategories, productsArray);
+        const template = new Template(this, title, optionsCategories, productsArray);
         template.render();
     }
 }

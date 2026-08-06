@@ -3,12 +3,12 @@ import '../../components';
 import styles from './style.css?inline';
 
 export class Template{
-    private root: ShadowRoot; 
+    private root: HTMLElement; 
     private title: string = 'Tienda on-line';
     private optionsCategories: string;
     private productsArray: any[];
 
-    constructor(root: ShadowRoot, title: string, optionsCategories: string, productsArray: any[]){
+    constructor(root: HTMLElement, title: string, optionsCategories: string, productsArray: any[]){
         this.root = root;
         this.title = title;
         this.optionsCategories = optionsCategories;
@@ -17,10 +17,10 @@ export class Template{
 
     render(){
         const htmlString: string = `
-            <div class="page-shell">
+            <div class="home-page-shell">
 
-                <main class="content-layout">
-                    <aside class="filters-panel">
+                <main class="home-content-layout">
+                    <aside class="home-filters-panel">
                         <h2>Filtros</h2>
                         <aside-section 
                             title="Categorias"
@@ -42,13 +42,13 @@ export class Template{
                     </aside>
                     
 
-                    <section class="products-section">
-                        <div class="section-title">
+                    <section class="home-products-section">
+                        <div class="home-section-title">
                             <h2>Productos destacados</h2>
                             <p>Descubre las mejores opciones del día</p>
                         </div>
                         
-                        <div class="products-grid">
+                        <div class="home-products-grid">
                         ${this.productsArray.map((product: any) => `
                             <product-card
                                 img="${product.thumbnail}"
