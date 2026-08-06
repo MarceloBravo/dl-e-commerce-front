@@ -1,4 +1,5 @@
 import { Template } from './template';
+import { validateEmail, validatePhone } from '../../utils/validations';
 
 /***
  * Página de contacto no implementa Ligth DOM y no ShadowDOM
@@ -40,23 +41,38 @@ export class ContactPage extends HTMLElement{
     }
 
     validateData(): boolean{
-        const inputName: HTMLInputElement | null = document.getElementById("input-name");
+        const inputName = document.querySelector<HTMLInputElement>("#input-name");
         const divNameError: HTMLElement | null = document.getElementById("input-name_error");
         let errors: number = 0;
         if(inputName && divNameError){
             let msgError = inputName.value.trim().length < 3 ? "El nombre debe tener almenos 3 carácteres" : '';
-            divNameError.innerHTML = msgError;
+            divNameError.innerText = msgError;
             errors += msgError.length > 0 ? 1 : 0;
         }
 
-        const inputEmail: HTMLInputElement | null = document.getElementById("input-email");
+        const inputEmail = document.querySelector<HTMLInputElement>("#input-email");
         const divEmailError: HTMLElement | null = document.getElementById("input-email_error");
         if(inputEmail && divEmailError){
-            let msgError = inputEmail.value.trim().length < 3 ? "El email es obligatorio" : '';
-            divEmailError.innerHTML = msgError;
+            let msgError = !validateEmail(inputEmail.value) ? "Ingresa una dirección de email válida." : '';
+            divEmailError.innerText = msgError;
+            errors += msgError.length > 0 ? 1 : 0;
+        }
+        
+        const inputPone = document.querySelector<HTMLInputElement>("#input-phone");
+        const divPhoneError: HTMLElement | null = document.getElementById("input-phone_error");
+        if(inputPone && divPhoneError){
+            let msgError = !validatePhone(inputPone.value) ? "Ingresa un número de teléfono válido" : '';
+            divPhoneError.innerText = msgError;
             errors += msgError.length > 0 ? 1 : 0;
         }
 
+        const inputMessage = document.querySelector<HTMLInputElement>("#input-message");
+        const divMessageError: HTMLElement | null = document.getElementById("input-message_error");
+        if(inputMessage && divMessageError){
+            let msgError = inputMessage.value.trim().length < 3 ? "El mensaje es obligatorio" : '';
+            divMessageError.innerText = msgError;
+            errors += msgError.length > 0 ? 1 : 0;
+        }
 
         return errors === 0;
     }
