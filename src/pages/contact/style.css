@@ -51,3 +51,7 @@
 .contact-page a {
 	color: #4338ca;
 }
+
+.contact-error{
+	color: red;
+}

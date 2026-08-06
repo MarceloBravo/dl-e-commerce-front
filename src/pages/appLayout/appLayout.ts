@@ -1,6 +1,10 @@
 // src/components/AppLayout.ts
-import '../../components';
+import '../../components/navBar';
 
+/**
+ * Layout principal que encargado de cargar dinámicamente las páhginas de la aplicación en el elememnto router-outlet
+ * Contiene el el header con la barra de navegación superior estática, la cual es única para toda la aplicación
+ */
 export class AppLayout extends HTMLElement {    
   connectedCallback() {
     this.innerHTML = `

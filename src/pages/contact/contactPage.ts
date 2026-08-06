@@ -26,8 +26,44 @@ export class ContactPage extends HTMLElement{
         this.render();
     }
 
+    configListeners(){
+        const button = document.querySelector('#btn-send');
+        if(button){
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                if(this.validateData()){
+                    console.log('Formulario enviado');
+                    alert('Formulario enviado');
+                }
+            });
+        }
+    }
+
+    validateData(): boolean{
+        const inputName: HTMLInputElement | null = document.getElementById("input-name");
+        const divNameError: HTMLElement | null = document.getElementById("input-name_error");
+        let errors: number = 0;
+        if(inputName && divNameError){
+            let msgError = inputName.value.trim().length < 3 ? "El nombre debe tener almenos 3 carácteres" : '';
+            divNameError.innerHTML = msgError;
+            errors += msgError.length > 0 ? 1 : 0;
+        }
+
+        const inputEmail: HTMLInputElement | null = document.getElementById("input-email");
+        const divEmailError: HTMLElement | null = document.getElementById("input-email_error");
+        if(inputEmail && divEmailError){
+            let msgError = inputEmail.value.trim().length < 3 ? "El email es obligatorio" : '';
+            divEmailError.innerHTML = msgError;
+            errors += msgError.length > 0 ? 1 : 0;
+        }
+
+
+        return errors === 0;
+    }
+
     render(){
         (new Template(this)).render();
+        this.configListeners();
     }
 
 }

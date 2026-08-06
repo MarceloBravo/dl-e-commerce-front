@@ -2,15 +2,16 @@ import './pages';
 
 import { Router } from './router';
 
-// Mapa de rutas URL -> Tag name del Web Component
+// Mapa de rutas URL 
 const routes = {
   '/': 'home-page',
   '/contact': 'contact-page',
   '404': 'home-page' // Ruta por defecto
 };
 
-// Inicializar el router
-const router = new Router(routes, 'router-outlet');
+// Inicializar el router 
+//Obs.: router-outlet es el id del div donde se cargarán las todas páginas, está definico en ./pages/appLayout/appLayout.ts
+const router = new Router(routes, 'router-outlet'); 
 
 // Interceptar los clics en enlaces con el atributo [data-link] para evitar el refresco
 document.addEventListener('click', (e: MouseEvent) => {
