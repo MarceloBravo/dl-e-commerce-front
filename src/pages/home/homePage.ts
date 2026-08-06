@@ -53,10 +53,13 @@ export class HomePage extends HTMLElement {
      * Genera el HTML y aplica el CSS del componente dentro de su shadow DOM.
      */
     render = async () => {
-        
+        const title: string = this.getAttribute('title') || 'Home';
+
+        this.replaceChildren();
+        const spinner = document.createElement('spinner-component');
+        this.appendChild(spinner);
 
         const {optionsCategories, productsArray} = await this.loadData();
-        const title: string = this.getAttribute('title') || 'Home';
         const template = new Template(this, title, optionsCategories, productsArray);
         template.render();
     }

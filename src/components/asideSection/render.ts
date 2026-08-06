@@ -16,6 +16,7 @@ export class Render {
     }
 
     render(){
+        
         const htmlString: string = `
             <section>
                 <h3>${this.title}</h3>
