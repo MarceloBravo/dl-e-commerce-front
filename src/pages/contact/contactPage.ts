@@ -31,30 +31,56 @@ export class ContactPage extends HTMLElement{
         const button = document.querySelector('#btn-send');
         if(button){
             button.addEventListener('click', (event) => {
-                event.preventDefault();
                 if(this.validateData()){
                     console.log('Formulario enviado');
                     alert('Formulario enviado');
+                    return;
                 }
+                event.preventDefault();
             });
         }
+
+        const inputName = document.querySelector<HTMLInputElement>("#input-name");
+        const divNameError: HTMLElement | null = document.getElementById("input-name_error");
+            if(inputName && divNameError){
+                inputName.addEventListener('change', (event) => {
+                divNameError.innerText = '';
+            })
+        } 
+        const inputEmail = document.querySelector<HTMLInputElement>("#input-email");
+        const divEmailError: HTMLElement | null = document.getElementById("input-email_error");
+            if(inputEmail && divEmailError){
+                inputEmail.addEventListener('change', (event) => {
+                divEmailError.innerText = '';
+            })
+        } 
+        const inputPhone = document.querySelector<HTMLInputElement>("#input-phone");
+        const divPhoneError: HTMLElement | null = document.getElementById("input-phone_error");
+            if(inputPhone && divPhoneError){
+                inputPhone.addEventListener('change', (event) => {
+                divPhoneError.innerText = '';
+            })
+        } 
+        const inputMessage = document.querySelector<HTMLInputElement>("#input-message");
+        const divMessageError: HTMLElement | null = document.getElementById("input-message_error");
+            if(inputMessage && divMessageError){
+                inputMessage.addEventListener('change', (event) => {
+                divMessageError.innerText = '';
+            })
+        } 
     }
 
     validateData(): boolean{
-        const inputName = document.querySelector<HTMLInputElement>("#input-name");
-        const divNameError: HTMLElement | null = document.getElementById("input-name_error");
         let errors: number = 0;
-        if(inputName && divNameError){
-            let msgError = inputName.value.trim().length < 3 ? "El nombre debe tener almenos 3 carácteres" : '';
-            divNameError.innerText = msgError;
-            errors += msgError.length > 0 ? 1 : 0;
-        }
 
-        const inputEmail = document.querySelector<HTMLInputElement>("#input-email");
-        const divEmailError: HTMLElement | null = document.getElementById("input-email_error");
-        if(inputEmail && divEmailError){
-            let msgError = !validateEmail(inputEmail.value) ? "Ingresa una dirección de email válida." : '';
-            divEmailError.innerText = msgError;
+        
+        
+        const inputMessage = document.querySelector<HTMLInputElement>("#input-message");
+        const divMessageError: HTMLElement | null = document.getElementById("input-message_error");
+        if(inputMessage && divMessageError){
+            let msgError = inputMessage.value.trim().length < 3 ? "El mensaje es obligatorio" : '';
+            divMessageError.innerText = msgError;
+            if(msgError)inputMessage.focus();
             errors += msgError.length > 0 ? 1 : 0;
         }
         
@@ -63,17 +89,28 @@ export class ContactPage extends HTMLElement{
         if(inputPone && divPhoneError){
             let msgError = !validatePhone(inputPone.value) ? "Ingresa un número de teléfono válido" : '';
             divPhoneError.innerText = msgError;
+            if(msgError)inputPone.focus();
             errors += msgError.length > 0 ? 1 : 0;
         }
 
-        const inputMessage = document.querySelector<HTMLInputElement>("#input-message");
-        const divMessageError: HTMLElement | null = document.getElementById("input-message_error");
-        if(inputMessage && divMessageError){
-            let msgError = inputMessage.value.trim().length < 3 ? "El mensaje es obligatorio" : '';
-            divMessageError.innerText = msgError;
+        const inputEmail = document.querySelector<HTMLInputElement>("#input-email");
+        const divEmailError: HTMLElement | null = document.getElementById("input-email_error");
+        if(inputEmail && divEmailError){
+            let msgError = !validateEmail(inputEmail.value) ? "Ingresa una dirección de email válida." : '';
+            divEmailError.innerText = msgError;
+            if(msgError)inputEmail.focus();
             errors += msgError.length > 0 ? 1 : 0;
         }
-
+        
+        const inputName = document.querySelector<HTMLInputElement>("#input-name");
+        const divNameError: HTMLElement | null = document.getElementById("input-name_error");
+        if(inputName && divNameError){
+            let msgError = inputName.value.trim().length < 3 ? "El nombre debe tener almenos 3 carácteres" : '';
+            divNameError.innerText = msgError;
+            if(msgError)inputName.focus();
+            errors += msgError.length > 0 ? 1 : 0;
+        }
+        
         return errors === 0;
     }
 

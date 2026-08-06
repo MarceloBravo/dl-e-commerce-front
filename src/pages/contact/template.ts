@@ -10,7 +10,7 @@ export class Template{
     render(){
         const htmlString: string = `<div class="contact-page__container">
             <h2>Contacto</h2>
-            <form>
+            <form id="contact-form">
                 <div>
                     <label for="input-name">Nombre</label>
                     <input type="text" id="input-name" name="name" maxlength="20" class="contact-page__input"/>

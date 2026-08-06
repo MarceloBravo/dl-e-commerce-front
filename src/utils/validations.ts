@@ -14,6 +14,6 @@ export const validatePhone = (phone: string): boolean => {
    * \s?            → espacio opcional
    * [0-9]{6,10}$   → número principal (6 a 10 dígitos)
    */
-    const regex = /^\+[0-9]{1,3}\s?[0-9]{1,2}\s?[0-9]{6,10}$/;
+    const regex = /^\+?[0-9]{1,3}\s?[0-9]{1,2}\s?[0-9]{6,10}$/;
     return regex.test(phone);
 }
