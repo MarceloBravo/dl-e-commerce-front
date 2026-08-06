@@ -16,7 +16,7 @@ export class Render {
     }
 
     render(){
-        const htmlString = `
+        const htmlString: string = `
             <footer class="site-footer">
                 <div>
                     <h2>${this.label}</h2>

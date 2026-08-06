@@ -40,6 +40,43 @@ export class NavBar extends HTMLElement {
         }
     }
 
+    private parseLinks(linksAttr: string | null): Links[] {
+        const fallbackItems: Links[] = [
+            { title: 'Inicio', href: '#' },
+            { title: 'Ofertas', href: '#' },
+            { title: 'Contacto', href: '#' }
+        ];
+
+        if (!linksAttr) {
+            return fallbackItems;
+        }
+
+        try {
+            if(this.isValidJSON(linksAttr)){
+                return JSON.parse(linksAttr) as Links[];
+            }
+            const normalized = linksAttr
+            .replace(/([{,]\s*)([A-Za-z0-9_]+)\s*:/g, '$1"$2":')
+            .replace(/:\s*'([^']*)'/g, ': "$1"')
+            .replace(/'/g, '"');
+            if(this.isValidJSON(normalized)){
+                return JSON.parse(normalized) as Links[];    
+            }
+            return fallbackItems;
+        } catch {
+            return fallbackItems;
+        }
+    }
+    
+    private isValidJSON(cadena: string): boolean{
+        try{
+            JSON.parse(cadena);
+            return true;
+        }catch{
+            return false;
+        }
+    }
+
     /**
      * Genera el HTML y aplica el CSS del componente dentro de su shadow DOM.
      */
@@ -53,11 +90,7 @@ export class NavBar extends HTMLElement {
         const title: string = this.getAttribute('ShopName') || this.getAttribute('shop-name') || 'Tienda on-line';
         const slogan: string = this.getAttribute('slogan') || 'Encuentra lo mejor para tu hogar';
         const linksAttr: string | null = this.getAttribute('links');
-        const items: Links[] = linksAttr ? JSON.parse(linksAttr) as Links[] : [
-            { title: 'Inicio', href: '#' },
-            { title: 'Ofertas', href: '#' },
-            { title: 'Contacto', href: '#' }
-        ];
+        const items: Links[] = this.parseLinks(linksAttr);
         
         const render = new Render(root, title, slogan, items);
         render.render();

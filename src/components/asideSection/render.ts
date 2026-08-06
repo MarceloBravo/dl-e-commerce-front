@@ -16,7 +16,7 @@ export class Render {
     }
 
     render(){
-        const htmlString = `
+        const htmlString: string = `
             <section>
                 <h3>${this.title}</h3>
                 <div class="aside-options">

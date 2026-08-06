@@ -1,77 +1,26 @@
-import './style.css'
-import { NavBar, AsideSection, Footer, Pagination } from './components';
+import './pages';
 
-import { ProductService } from './services/productService';
-import { categoriesService } from './services/categoriesService';
-import type { ResponseInterface } from './interfaces/responseInterface';
-let optionsCategories: string='[]';
-let productsArray: any[] = [];
+import { Router } from './router';
 
-const getData = async () => {
-  const products: ResponseInterface = await ProductService.getAll();
-  console.log('Products:', products);
-  const categories: ResponseInterface = await categoriesService.getAll();
-  optionsCategories = categories.data.map((category: any) => `{"label":"${category.slug}","type":"checkbox","checked":false}`).join(',');
-  productsArray = products.products; //.map((product: any) => `{"label":"${product.title}","type":"checkbox","checked":false}`).join(',');
-  console.log('Array Products:', productsArray);
+// Mapa de rutas URL -> Tag name del Web Component
+const routes = {
+  '/': 'home-page',
+  '/contact': 'contact-page',
+  '404': 'home-page' // Ruta por defecto
+};
 
-  const htmlString = `
-    <div class="page-shell">
-      <nav-bar ShopName="Tienda on-line" slogan="Encuentra lo mejor para tu hogar"></nav-bar>
+// Inicializar el router
+const router = new Router(routes, 'router-outlet');
 
-      <main class="content-layout">
-        <aside class="filters-panel">
-          <h2>Filtros</h2>
-          <aside-section 
-            title="Categorias"
-            type="checkbox" 
-            options='[${optionsCategories}]'>
-          </aside-section>
+// Interceptar los clics en enlaces con el atributo [data-link] para evitar el refresco
+document.addEventListener('click', (e: MouseEvent) => {
+  const target = (e.target as HTMLElement).closest('[data-link]');
+  if (target && target instanceof HTMLAnchorElement) {
+    e.preventDefault(); // Evita que el navegador haga un GET al servidor
+    router.navigate(target.pathname);
+  }
+});
 
-          <aside-section 
-            title="marcas"
-            type="checkbox" 
-            options='[{"label":"Samsung","type":"checkbox","checked":true},{"label":"Apple","type":"checkbox"},{"label":"Sony","type":"checkbox"}]'>
-          </aside-section>
+// Renderizar la ruta inicial al cargar la aplicación
+router.handleRoute();
 
-          <aside-section 
-            title="precios"
-            type="radio" 
-            options='[{"label":"Menor a $50.000","type":"radio","checked":true},{"label":"$50.000 - $100.000","type":"radio"},{"label":"Más de $100.000","type":"radio"}]'>
-          </aside-section>
-        </aside>
-        
-
-        <section class="products-section">
-          <div class="section-title">
-            <h2>Productos destacados</h2>
-            <p>Descubre las mejores opciones del día</p>
-          </div>
-
-          <div class="products-grid">
-            ${productsArray.map((product: any) => `
-              <product-card
-                img="${product.thumbnail}"
-                title="${product.title}"
-                description="${product.description}"
-                price="${product.price}"
-              ></product-card>
-            `).join('')}
-          </div>
-          <pagination-nav total-pages="${productsArray.length}" active-page="1"></pagination-nav> 
-        </section>
-      </main>
-
-      <footer-section 
-        title="Tienda on-line"
-        created="03/08/2026"
-        phone="+56 9 1234 5678"
-        email="contacto@tiendaonline.cl"/>
-    </div>
-  `;
-
-  const fragmento: DocumentFragment = document.createRange().createContextualFragment(htmlString);
-  document.querySelector<HTMLDivElement>('#app')!.replaceChildren(fragmento);
-}
-
-getData();

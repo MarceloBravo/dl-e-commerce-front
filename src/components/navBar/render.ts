@@ -26,7 +26,7 @@ export class Render {
                     </div>
                     </div>
                     <nav class="top-nav">
-                    ${this.items.map(({ title, href }) => `<a href="${href}">${title}</a>`).join('')}
+                    ${this.items.map(({ title, href }) => `<a href="${href}" data-link>${title}</a>`).join('')}
                     </nav>
                     <button class="cart-btn" type="button" aria-label="Carrito">🛒 2</button>
                 </header>

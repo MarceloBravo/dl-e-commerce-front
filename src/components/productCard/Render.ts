@@ -16,7 +16,7 @@ export class Render {
     }
 
     render(){
-         const htmlString = `
+         const htmlString: string = `
             <article class="product-card">
                 <img src="${this.img}" alt="${this.title}">
                 <h3>${this.title}</h3>
