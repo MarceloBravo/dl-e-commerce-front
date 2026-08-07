@@ -44,7 +44,7 @@ export class Render {
                     <nav class="top-nav">
                     ${this.items.map(({ title, href }) => `<a href="${href}" data-link>${title}</a>`).join('')}
                     </nav>
-                    <button class="cart-btn" type="button" aria-label="Carrito">🛒 2</button>
+                    <button class="cart-btn" type="button" aria-label="Carrito">🛒 0</button>
                 </header>
                 `;
 
