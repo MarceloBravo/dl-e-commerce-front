@@ -1,5 +1,11 @@
 import { Render } from './render';
 
+/**
+ * Web Component que renderiza el pie de página del e-commerce.
+ *
+ * Acepta los atributos `label`, `created`, `phone` y `email` para
+ * personalizar el contenido dentro de su shadow DOM.
+ */
 export class Footer extends HTMLElement {
 
     constructor() {

@@ -40,6 +40,15 @@ export class NavBar extends HTMLElement {
         }
     }
 
+    /**
+     * Parsea el atributo `links` a un arreglo de enlaces de navegación.
+     *
+     * Acepta JSON válido o JSON con comillas simples; si no puede
+     * interpretarse, devuelve un listado de enlaces por defecto.
+     *
+     * @param linksAttr Valor crudo del atributo `links`.
+     * @returns Lista de enlaces normalizados.
+     */
     private parseLinks(linksAttr: string | null): Links[] {
         const fallbackItems: Links[] = [
             { title: 'Inicio', href: '#' },
@@ -68,6 +77,12 @@ export class NavBar extends HTMLElement {
         }
     }
     
+    /**
+     * Comprueba si una cadena es JSON válido.
+     *
+     * @param cadena Cadena a evaluar.
+     * @returns `true` si la cadena es JSON válido, `false` en caso contrario.
+     */
     private isValidJSON(cadena: string): boolean{
         try{
             JSON.parse(cadena);

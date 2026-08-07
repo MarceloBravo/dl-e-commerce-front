@@ -1,9 +1,11 @@
 import { Template } from './template';
 import { validateEmail, validatePhone } from '../../utils/validations';
 
-/***
- * Página de contacto no implementa Ligth DOM y no ShadowDOM
-*/
+/**
+ * Web Component de la página de contacto.
+ *
+ * Implementa un formulario validado usando Light DOM (sin Shadow DOM).
+ */
 export class ContactPage extends HTMLElement{
 
     constructor(){
@@ -27,6 +29,12 @@ export class ContactPage extends HTMLElement{
         this.render();
     }
 
+    /**
+     * Configura los listeners del formulario y de los campos de entrada.
+     *
+     * Al enviar el formulario se valida la información; los errores de cada
+     * campo se limpian cuando el usuario modifica su valor.
+     */
     configListeners(){
         const form = document.getElementById('contact-form');
         if(form){
@@ -69,6 +77,13 @@ export class ContactPage extends HTMLElement{
         } 
     }
 
+    /**
+     * Valida los campos del formulario de contacto.
+     *
+     * Muestra mensajes de error por campo y enfoca el primer campo con error.
+     *
+     * @returns `true` si todos los campos son válidos, `false` en caso contrario.
+     */
     validateData(): boolean{
         let errors: number = 0;
 
@@ -113,6 +128,9 @@ export class ContactPage extends HTMLElement{
         return errors === 0;
     }
 
+    /**
+     * Genera el contenido de la página y configura sus listeners.
+     */
     render(){
         (new Template(this)).render();
         this.configListeners();

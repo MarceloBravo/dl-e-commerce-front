@@ -2,10 +2,16 @@
 import '../../components/navBar';
 
 /**
- * Layout principal que encargado de cargar dinámicamente las páhginas de la aplicación en el elememnto router-outlet
- * Contiene el el header con la barra de navegación superior estática, la cual es única para toda la aplicación
+ * Layout principal encargado de cargar dinámicamente las páginas de la
+ * aplicación en el elemento `router-outlet`.
+ *
+ * Contiene el header con la barra de navegación superior estática, única
+ * para toda la aplicación.
  */
 export class AppLayout extends HTMLElement {    
+  /**
+   * Se ejecuta cuando el componente se inserta en el DOM.
+   */
   connectedCallback() {
     this.innerHTML = `
         <nav-bar 

@@ -2,6 +2,12 @@ import type { AsideOptions } from '../../interfaces/asideOptions';
 import { InputTypeEnum } from '../../enum/inputTypeEnum';
 import { Render } from './render';
 
+/**
+ * Web Component que renderiza una sección de filtros laterales.
+ *
+ * Acepta los atributos `title`, `type` (checkbox o radio) y `options`
+ * (JSON con las opciones del filtro) dentro de su shadow DOM.
+ */
 export class AsideSection extends HTMLElement {
     constructor() {
         super();

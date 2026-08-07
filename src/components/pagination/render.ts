@@ -1,5 +1,9 @@
 import styles from './style.css?inline';
 
+/**
+ * Genera el HTML y aplica los estilos del componente `pagination-nav`
+ * dentro de su shadow DOM.
+ */
 export class Render {
     private root: ShadowRoot;
     private pageNumbers: number[];
@@ -8,6 +12,14 @@ export class Render {
     private lastDisabled: boolean;
     private lastPage: number;
 
+    /**
+     * @param root          Shadow root del componente donde se renderiza.
+     * @param pageNumbers   Números de página a mostrar como botones.
+     * @param active        Página activa.
+     * @param firstDisabled Indica si el botón de primera página debe estar deshabilitado.
+     * @param lastDisabled  Indica si el botón de última página debe estar deshabilitado.
+     * @param lastPage      Número de la última página.
+     */
     constructor(root: ShadowRoot, pageNumbers: number[], active: number, firstDisabled: boolean, lastDisabled: boolean, lastPage: number) {
         this.root = root;
         this.pageNumbers = pageNumbers;
@@ -17,6 +29,12 @@ export class Render {
         this.lastPage = lastPage;
     }
 
+    /**
+     * Construye el HTML de la paginación, lo inserta en el shadow root
+     * y adjunta los estilos del componente.
+     *
+     * @returns El shadow root con el contenido renderizado.
+     */
     render() {
         const pageButtons = this.pageNumbers
             .map((page) => {

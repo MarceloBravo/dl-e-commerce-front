@@ -1,12 +1,22 @@
 import type { Links } from '../../interfaces/links';
 import styles from './style.css?inline';
 
+/**
+ * Genera el HTML y aplica los estilos de la barra de navegación
+ * dentro de su shadow DOM.
+ */
 export class Render {
     root: ShadowRoot;
     title: string;
     slogan: string;
     items: Links[];
 
+    /**
+     * @param root    Shadow root del componente donde se renderiza.
+     * @param title   Nombre de la tienda.
+     * @param slogan  Eslogan de la tienda.
+     * @param items   Enlaces de navegación de la barra superior.
+     */
     constructor(root: ShadowRoot, title: string, slogan: string, items: Links[]) {
         this.root = root;
         this.title = title;
@@ -14,6 +24,12 @@ export class Render {
         this.items = items;
     }
 
+    /**
+     * Construye el HTML de la barra de navegación, lo inserta en el
+     * shadow root y adjunta los estilos del componente.
+     *
+     * @returns El shadow root con el contenido renderizado.
+     */
     render(){
         
         const htmlString: string = `

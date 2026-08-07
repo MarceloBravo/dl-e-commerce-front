@@ -1,12 +1,24 @@
 import styles from './style.css?inline';
 
+/**
+ * Genera el HTML y los estilos de la página 404 en el light DOM.
+ */
 export class Template{
     private host: HTMLElement;
 
+    /**
+     * @param host Elemento anfitrión donde se renderiza la plantilla.
+     */
     constructor(host: HTMLElement){
         this.host = host;
     }
 
+    /**
+     * Construye el HTML de la página 404, lo inserta en el anfitrión
+     * y adjunta los estilos correspondientes.
+     *
+     * @returns El elemento anfitrión con el contenido renderizado.
+     */
     render(){
         const htmlString: string = `
             <div class="page-404__card">

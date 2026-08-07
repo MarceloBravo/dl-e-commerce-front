@@ -1,5 +1,9 @@
 import styles from './style.css?inline';
 
+/**
+ * Genera el HTML y aplica los estilos del componente `footer-section`
+ * dentro de su shadow DOM.
+ */
 export class Render {
     private root: ShadowRoot;
     private label: string;
@@ -7,6 +11,13 @@ export class Render {
     private phone: string;
     private email: string;
 
+    /**
+     * @param root    Shadow root del componente donde se renderiza.
+     * @param label   Título del footer.
+     * @param created Fecha de creación mostrada en el footer.
+     * @param phone   Teléfono de contacto.
+     * @param email   Correo electrónico de contacto.
+     */
     constructor(root: ShadowRoot, label: string, created: string, phone: string, email: string) {
         this.root = root;
         this.label = label;
@@ -15,6 +26,12 @@ export class Render {
         this.email = email;
     }
 
+    /**
+     * Construye el HTML del footer, lo inserta en el shadow root
+     * y adjunta los estilos del componente.
+     *
+     * @returns El shadow root con el contenido renderizado.
+     */
     render(){
         const htmlString: string = `
             <footer class="site-footer">

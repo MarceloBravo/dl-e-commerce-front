@@ -4,6 +4,12 @@ import styles from './style.css?inline';
 import type { ProductResponseApi } from '../../interfaces/productResponseApi';
 import { LoadStatus } from '../../enum/loadStatusEnum';
 
+/**
+ * Genera el HTML y los estilos de la página de inicio en el light DOM.
+ *
+ * Según el estado de carga, muestra un error, la grilla de productos
+ * o la paginación correspondiente.
+ */
 export class Template{
     private root: HTMLElement; 
     private title: string = 'Tienda on-line';
@@ -12,7 +18,14 @@ export class Template{
     private activaPage: number = 1;
     private loadStatus: LoadStatus;
     
-
+    /**
+     * @param root              Elemento anfitrión donde se renderiza la plantilla.
+     * @param title             Título de la página.
+     * @param optionsCategories Opciones de categorías (JSON) para los filtros.
+     * @param productsData      Datos de productos o mensaje de error.
+     * @param activaPage        Página activa actual.
+     * @param loadStatus        Estado de carga de la interfaz.
+     */
     constructor(root: HTMLElement, title: string, optionsCategories: string, productsData: ProductResponseApi | string, activaPage: number, loadStatus: LoadStatus){
         this.root = root;
         this.title = title;
@@ -22,6 +35,11 @@ export class Template{
         this.loadStatus = loadStatus;
     }
 
+    /**
+     * Genera el contenido de la grilla de productos según el estado de carga.
+     *
+     * @returns HTML con el mensaje de error, la grilla de productos o un mensaje de carga.
+     */
     private renderContent(): string {
         switch (this.loadStatus) {
             case LoadStatus.ERROR:
@@ -51,6 +69,11 @@ export class Template{
         }
     }
 
+    /**
+     * Calcula el total de páginas de la paginación.
+     *
+     * @returns Total de páginas, o 1 si no hay datos o el estado no es de éxito.
+     */
     private getTotalPages(): number {
         if (this.loadStatus !== LoadStatus.SUCCESS || typeof this.productsData === 'string') {
             return 1;
@@ -60,6 +83,12 @@ export class Template{
         return total > 0 && limit > 0 ? Math.round(total / limit) : 1;
     }
 
+    /**
+     * Construye el HTML completo de la página de inicio, lo inserta en el
+     * anfitrión y adjunta los estilos correspondientes.
+     *
+     * @returns El elemento anfitrión con el contenido renderizado.
+     */
     render(){
         const productsGrid: string = this.renderContent();
         const totalPages: number = this.getTotalPages();

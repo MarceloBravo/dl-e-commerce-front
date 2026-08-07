@@ -101,3 +101,5 @@ npm run build
 Marcelo Bravo C.
 
 Tienda on-line — Hito 2, Java Desafío Latam.
+
+Se puede ver la aplicación desplegada en: https://e-shop-vanilla.netlify.app/

@@ -2,6 +2,11 @@ import type { dimensions } from "../interfaces/dimensions";
 import type { MedaData } from "../interfaces/metaData";
 import type { reviews } from "../interfaces/reviews";
 
+/**
+ * Modelo de dominio que representa un producto del catálogo.
+ *
+ * Las propiedades replican la estructura de un producto de la API de DummyJSON.
+ */
 export class Product {
   "id": number;
   "title": string;

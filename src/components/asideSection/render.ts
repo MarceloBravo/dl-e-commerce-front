@@ -2,12 +2,22 @@ import type { AsideOptions } from '../../interfaces/asideOptions';
 import { InputTypeEnum } from '../../enum/inputTypeEnum';
 import styles from './style.css?inline';
 
+/**
+ * Genera el HTML y aplica los estilos del componente `aside-section`
+ * dentro de su shadow DOM.
+ */
 export class Render {
     private root: ShadowRoot;
     private type: InputTypeEnum;
     private title: string
     private options: AsideOptions[];
 
+    /**
+     * @param root    Shadow root del componente donde se renderiza.
+     * @param title   Título de la sección de filtros.
+     * @param type    Tipo de control (checkbox o radio).
+     * @param options Opciones del filtro.
+     */
     constructor(root: ShadowRoot, title: string, type: InputTypeEnum, options: AsideOptions[]) {
         this.root = root;
         this.type = type;
@@ -15,6 +25,12 @@ export class Render {
         this.options = options;
     }
 
+    /**
+     * Construye el HTML de la sección, lo inserta en el shadow root
+     * y adjunta los estilos del componente.
+     *
+     * @returns El shadow root con el contenido renderizado.
+     */
     render(){
         
         const htmlString: string = `

@@ -1,12 +1,24 @@
 import styles from './style.css?inline';
 
+/**
+ * Genera el HTML y los estilos del formulario de contacto en el light DOM.
+ */
 export class Template{
     private host: HTMLElement;
 
+    /**
+     * @param host Elemento anfitrión donde se renderiza la plantilla.
+     */
     constructor(host: HTMLElement){
         this.host = host;
     }
 
+    /**
+     * Construye el HTML del formulario, lo inserta en el anfitrión
+     * y adjunta los estilos correspondientes.
+     *
+     * @returns El elemento anfitrión con el contenido renderizado.
+     */
     render(){
         const htmlString: string = `<div class="contact-page__container">
             <h2>Contacto</h2>
