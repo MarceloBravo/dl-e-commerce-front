@@ -6,13 +6,18 @@ export class Template{
     private root: HTMLElement; 
     private title: string = 'Tienda on-line';
     private optionsCategories: string;
-    private productsArray: any[];
+    private productsArray: any[] | string;
+    private activaPage: number = 1;
+    private totalPages: number;
+    
 
-    constructor(root: HTMLElement, title: string, optionsCategories: string, productsArray: any[]){
+    constructor(root: HTMLElement, title: string, optionsCategories: string, productsArray: any[] | string, activaPage: number){
         this.root = root;
         this.title = title;
         this.optionsCategories = optionsCategories;
         this.productsArray = productsArray;
+        this.activaPage = activaPage;
+        this.totalPages = productsArray?.total ? Math.round(productsArray?.total / productsArray?.limit) : 1;
     }
 
     render(){
@@ -49,17 +54,18 @@ export class Template{
                         </div>
                         
                         <div class="home-products-grid">
-                        ${this.productsArray.map((product: any) => `
+                        ${Array.isArray(this.productsArray?.products) ? 
+                            this.productsArray.products.map((product: any) => `
                             <product-card
                                 img="${product.thumbnail}"
                                 title="${product.title}"
                                 description="${product.description}"
                                 price="${product.price}"
                             ></product-card>
-                            `).join('')}
+                            `).join('') : this.productsArray }
                         </div>
 
-                        <pagination-nav total-pages="${this.productsArray.length}" active-page="1"></pagination-nav> 
+                        <pagination-nav total-pages="${this.totalPages}" active-page="${this.activaPage}"></pagination-nav> 
                     </section>
                 </main>
 

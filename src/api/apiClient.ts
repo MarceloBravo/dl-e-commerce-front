@@ -1,15 +1,18 @@
-import type { CategoriesResponseApi } from "../interfaces/categoriesResponseApi";
-import type { ProductResponseApi } from "../interfaces/productResponseApi";
 import type { ResponseInterface } from "../interfaces/responseInterface";
 
 const BASE_URL = 'https://dummyjson.com';
 
+const buildErrorResponse = (message: string, status = 500): ResponseInterface => ({
+  data: message,
+  ok: false,
+  status,
+});
 
 export const apiClient = async (endpoint: string, options: RequestInit = {}): Promise<ResponseInterface> => {
-  try{
-      const url = `${BASE_URL}${endpoint}`;
+  try {
+    const url = `${BASE_URL}${endpoint}`;
 
-      const response = await fetch(`${url}`, {
+    const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
@@ -18,23 +21,26 @@ export const apiClient = async (endpoint: string, options: RequestInit = {}): Pr
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw Object.assign(new Error(`HTTP error! status: ${response.status}`), {
+        status: response.status,
+      });
     }
-    const ok = response.ok;
-    const status = response.status;
-    const resp = await response.json();
-    resp.data = resp.products ? resp.products : resp;
-    resp.ok = ok;
-    resp.status = status;
-    return resp;
+
+    const responseData = await response.json();
+
+    return {
+      ...responseData,
+      data: responseData,
+      ok: true,
+      status: response.status,
+    } as ResponseInterface;
   } catch (error) {
-    console.error('Error in apiClient:', error);
-    return Promise.reject(
-      { 
-        data: error instanceof Error ? error.message : 'Unknown error', 
-        ok: false, 
-        status: error.status || 500 
-      }
-    );
+    const status = error instanceof Error && 'status' in error && typeof error.status === 'number'
+      ? error.status
+      : 500;
+    const message = error instanceof Error ? error.message : 'Unknown error';
+
+    console.error('Error in apiClient:', message);
+    throw buildErrorResponse(message, status);
   }
-}
+};
