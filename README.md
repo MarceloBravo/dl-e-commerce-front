@@ -1,6 +1,6 @@
 # E-Commerce Front
 
-Aplicación de tienda en línea construida con **Vite + TypeScript** como parte del Hito 2 curso Java Desafio Latam. Implementa interfaces dinámicas mediante Web Components, tipado estricto, manipulación segura del DOM y peticiones asíncronas a la API pública de [DummyJSON](https://dummyjson.com) con feedback continuo para el usuario.
+Aplicación de tienda en línea construida con **Vite + TypeScript vanilla** como parte del Hito 2 del curso Java Desafío Latam. Implementa interfaces dinámicas mediante Web Components, tipado estricto, manipulación segura del DOM y peticiones asíncronas a la API pública de [DummyJSON](https://dummyjson.com) con feedback continuo para el usuario.
 
 ## Descripción
 
@@ -8,8 +8,10 @@ La aplicación muestra un catálogo de productos con filtros por categoría, mar
 
 ## Tecnologías
 
-- [Vite](https://vitejs.dev/)
-- [TypeScript](https://www.typescriptlang.org/) (modo `strict`)
+Aplicación 100% vanilla: **cero dependencias de runtime** (sin React, Vue, Angular, etc.). Las interfaces dinámicas se construyen con Web Components nativos del navegador — los componentes reutilizables usan **Custom Elements + Shadow DOM** y las páginas usan **Custom Elements + Light DOM** — junto con `fetch` y manipulación directa del DOM.
+
+- [Vite](https://vitejs.dev/) — build tool y servidor de desarrollo
+- [TypeScript](https://www.typescriptlang.org/) (modo `strict`) — tipado hermético
 - [Web Components](https://developer.mozilla.org/es/docs/Web/API/Web_components) (Custom Elements + Shadow DOM)
 - [DummyJSON](https://dummyjson.com/) (API REST)
 
