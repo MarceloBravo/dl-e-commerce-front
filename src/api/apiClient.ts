@@ -1,6 +1,7 @@
 import type { ApiError, ResponseInterface } from "../interfaces/responseInterface";
 
-const BASE_URL = 'https://dummyjson.com';
+//const BASE_URL = 'https://dummyjson.com';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const buildErrorResponse = (message: string, status = 500): ApiError => ({
   data: message,

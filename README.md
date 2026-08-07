@@ -20,6 +20,7 @@ Aplicación 100% vanilla: **cero dependencias de runtime** (sin React, Vue, Angu
 ```
 e-commerce-front/
 ├── index.html                  # HTML raíz (monta <app-layout>)
+├── .env.example                # Plantilla de variables de entorno
 ├── package.json
 ├── tsconfig.json               # TypeScript en modo strict
 ├── README.md
@@ -66,6 +67,23 @@ e-commerce-front/
 ```
 
 Cada componente de `src/components/` y cada página de `src/pages/` sigue el patrón de tres archivos: el `index.ts` (barrel export), el archivo del Web Component (p. ej. `productCard.ts`) y su `render.ts`/`template.ts` que genera el HTML con su `style.css`.
+
+## Configuración
+
+Copia el archivo `.env.example` a `.env` y ajusta los valores según corresponda:
+
+```bash
+cp .env.example .env
+```
+
+Variables disponibles:
+
+| Variable                  | Descripción                                              | Valor por defecto          |
+| ------------------------- | -------------------------------------------------------- | -------------------------- |
+| `VITE_API_URL`            | URL base de la API REST usada para el catálogo           | `https://dummyjson.com`    |
+| `VITE_PLACEHOLDER_IMAGE`  | URL de la imagen por defecto para productos sin imagen   | `https://via.placeholder.com/150` |
+
+> El archivo `.env` está incluido en `.gitignore` y no se sube al repositorio.
 
 ## Comandos de Instalación y Ejecución
 

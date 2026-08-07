@@ -1,5 +1,7 @@
 import { Render } from './Render';
 
+const PLACEHOLDER_IMAGE = import.meta.env.VITE_PLACEHOLDER_IMAGE;
+
 export class ProductCard extends HTMLElement {
   constructor() {
     super();
@@ -44,7 +46,7 @@ export class ProductCard extends HTMLElement {
               return;
           }
           
-          const img: string = this.getAttribute('img') || 'https://via.placeholder.com/150';
+          const img: string = this.getAttribute('img') || PLACEHOLDER_IMAGE;
           const title: string = this.getAttribute('title') || 'Producto desconocido';
           const description: string = this.getAttribute('description') || 'Descripción no disponible';
           const price: string = this.getAttribute('price') || '$0.00';
