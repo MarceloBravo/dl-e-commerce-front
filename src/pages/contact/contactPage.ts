@@ -28,43 +28,42 @@ export class ContactPage extends HTMLElement{
     }
 
     configListeners(){
-        const button = document.querySelector('#btn-send');
-        if(button){
-            button.addEventListener('click', (event) => {
+        const form = document.getElementById('contact-form');
+        if(form){
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
                 if(this.validateData()){
                     console.log('Formulario enviado');
                     alert('Formulario enviado');
-                    return;
                 }
-                event.preventDefault();
             });
         }
 
         const inputName = document.querySelector<HTMLInputElement>("#input-name");
         const divNameError: HTMLElement | null = document.getElementById("input-name_error");
             if(inputName && divNameError){
-                inputName.addEventListener('change', (event) => {
+                inputName.addEventListener('change', () => {
                 divNameError.innerText = '';
             })
         } 
         const inputEmail = document.querySelector<HTMLInputElement>("#input-email");
         const divEmailError: HTMLElement | null = document.getElementById("input-email_error");
             if(inputEmail && divEmailError){
-                inputEmail.addEventListener('change', (event) => {
+                inputEmail.addEventListener('change', () => {
                 divEmailError.innerText = '';
             })
         } 
         const inputPhone = document.querySelector<HTMLInputElement>("#input-phone");
         const divPhoneError: HTMLElement | null = document.getElementById("input-phone_error");
             if(inputPhone && divPhoneError){
-                inputPhone.addEventListener('change', (event) => {
+                inputPhone.addEventListener('change', () => {
                 divPhoneError.innerText = '';
             })
         } 
         const inputMessage = document.querySelector<HTMLInputElement>("#input-message");
         const divMessageError: HTMLElement | null = document.getElementById("input-message_error");
             if(inputMessage && divMessageError){
-                inputMessage.addEventListener('change', (event) => {
+                inputMessage.addEventListener('change', () => {
                 divMessageError.innerText = '';
             })
         } 

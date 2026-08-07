@@ -1,9 +1,8 @@
-import type { ResponseInterface } from "../interfaces/responseInterface";
+import type { ApiError, ResponseInterface } from "../interfaces/responseInterface";
 
-export const handleError = (error: unknown, fallbackMessage: string): ResponseInterface => {
-    error.data = fallbackMessage ?? error.data;
+export const handleError = <T,>(error: unknown, fallbackMessage: string): ResponseInterface<T> => {
     if (typeof error === 'object' && error !== null && 'ok' in error && 'status' in error && 'data' in error) {
-        return error as ResponseInterface;
+        return error as ApiError;
     }
 
     const status = typeof error === 'object' && error !== null && 'status' in error && typeof (error as { status?: unknown }).status === 'number'

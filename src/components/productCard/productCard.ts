@@ -3,7 +3,7 @@ import { Render } from './Render';
 export class ProductCard extends HTMLElement {
   constructor() {
     super();
-    const shadow = this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'open' });
   }
 
   /**

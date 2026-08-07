@@ -1,26 +1,72 @@
 import '../../components';
 
 import styles from './style.css?inline';
+import type { ProductResponseApi } from '../../interfaces/productResponseApi';
+import { LoadStatus } from '../../enum/loadStatusEnum';
 
 export class Template{
     private root: HTMLElement; 
     private title: string = 'Tienda on-line';
     private optionsCategories: string;
-    private productsArray: any[] | string;
+    private productsData: ProductResponseApi | string;
     private activaPage: number = 1;
-    private totalPages: number;
+    private loadStatus: LoadStatus;
     
 
-    constructor(root: HTMLElement, title: string, optionsCategories: string, productsArray: any[] | string, activaPage: number){
+    constructor(root: HTMLElement, title: string, optionsCategories: string, productsData: ProductResponseApi | string, activaPage: number, loadStatus: LoadStatus){
         this.root = root;
         this.title = title;
         this.optionsCategories = optionsCategories;
-        this.productsArray = productsArray;
+        this.productsData = productsData;
         this.activaPage = activaPage;
-        this.totalPages = productsArray?.total ? Math.round(productsArray?.total / productsArray?.limit) : 1;
+        this.loadStatus = loadStatus;
+    }
+
+    private renderContent(): string {
+        switch (this.loadStatus) {
+            case LoadStatus.ERROR:
+                return `
+                    <div class="alerta-error">
+                        <p>No fue posible obtener los datos de productos.</p>
+                    </div>
+                `;
+            case LoadStatus.SUCCESS:
+                if (typeof this.productsData === 'string') {
+                    return '';
+                }
+                if (this.productsData.products.length === 0) {
+                    return '<p>No hay productos disponibles en este momento.</p>';
+                }
+                return this.productsData.products.map((product) => `
+                    <product-card
+                        img="${product.thumbnail}"
+                        title="${product.title}"
+                        description="${product.description}"
+                        price="${product.price}"
+                    ></product-card>
+                `).join('');
+            case LoadStatus.LOADING:
+            default:
+                return "<p class='loading'>Cargando productos desde el servidor ...</p>";
+        }
+    }
+
+    private getTotalPages(): number {
+        if (this.loadStatus !== LoadStatus.SUCCESS || typeof this.productsData === 'string') {
+            return 1;
+        }
+        const total: number = this.productsData.total;
+        const limit: number = this.productsData.limit;
+        return total > 0 && limit > 0 ? Math.round(total / limit) : 1;
     }
 
     render(){
+        const productsGrid: string = this.renderContent();
+        const totalPages: number = this.getTotalPages();
+        const pagination: string = this.loadStatus === LoadStatus.SUCCESS
+            ? `<pagination-nav total-pages="${totalPages}" active-page="${this.activaPage}"></pagination-nav>`
+            : '';
+
         const htmlString: string = `
             <div class="home-page-shell">
 
@@ -54,18 +100,10 @@ export class Template{
                         </div>
                         
                         <div class="home-products-grid">
-                        ${Array.isArray(this.productsArray?.products) ? 
-                            this.productsArray.products.map((product: any) => `
-                            <product-card
-                                img="${product.thumbnail}"
-                                title="${product.title}"
-                                description="${product.description}"
-                                price="${product.price}"
-                            ></product-card>
-                            `).join('') : this.productsArray }
+                        ${productsGrid}
                         </div>
 
-                        <pagination-nav total-pages="${this.totalPages}" active-page="${this.activaPage}"></pagination-nav> 
+                        ${pagination}
                     </section>
                 </main>
 

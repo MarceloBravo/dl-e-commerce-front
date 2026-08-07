@@ -1,4 +1,5 @@
 import type { AsideOptions } from '../../interfaces/asideOptions';
+import { InputTypeEnum } from '../../enum/inputTypeEnum';
 import { Render } from './render';
 
 export class AsideSection extends HTMLElement {
@@ -44,7 +45,7 @@ export class AsideSection extends HTMLElement {
             return;
         }
         
-        const type: string = this.getAttribute('type') || 'checkbox';
+        const type: InputTypeEnum = (this.getAttribute('type') as InputTypeEnum) || InputTypeEnum.CHECKBOX;
         const optionsAttr: string | null = this.getAttribute('options');
         const options: AsideOptions[] = optionsAttr ? JSON.parse(optionsAttr) as AsideOptions[] : [
             { 'label': "Opción 1", 'type': 'checkbox', 'checked': true },

@@ -125,6 +125,30 @@ body {
   max-height: 600px;
 }
 
+.alerta-error {
+  grid-column: 1 / -1;
+  padding: 1.25rem;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.alerta-error p {
+  margin: 0 0 0.25rem;
+  font-weight: 700;
+}
+
+.alerta-error small {
+  color: #b91c1c;
+}
+
+.loading {
+  grid-column: 1 / -1;
+  color: #6b7280;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .home-topbar,
   .home-content-layout,

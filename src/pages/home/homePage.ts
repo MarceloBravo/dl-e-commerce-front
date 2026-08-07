@@ -1,8 +1,10 @@
 import { ProductService } from '../../services/productService';
 import { categoriesService } from '../../services/categoriesService';
 import type { ResponseInterface } from '../../interfaces/responseInterface';
-import { Template } from './template';
 import type { ProductResponseApi } from '../../interfaces/productResponseApi';
+import type { CategoriesResponseApi } from '../../interfaces/categoriesResponseApi';
+import { Template } from './template';
+import { LoadStatus } from '../../enum/loadStatusEnum';
 
 
 export class HomePage extends HTMLElement {
@@ -21,23 +23,22 @@ export class HomePage extends HTMLElement {
     }
 
     loadData = async (limit: number = 10, page: number = 1) => {
-        const products: ResponseInterface = await ProductService.getAll(limit, page);
-        const categories: ResponseInterface = await categoriesService.getAll();
+        const products: ResponseInterface<ProductResponseApi> = await ProductService.getAll(limit, page);
+        const categories: ResponseInterface<CategoriesResponseApi['data']> = await categoriesService.getAll();
 
-        const optionsCategories: string = !Array.isArray(categories.data) ? `{"label": "${categories.data}", "type": "checkbox", "checked": false}` : categories.data.map((category: any) => `{"label":"${category.slug}","type":"checkbox","checked":false}`).join(',') ?? [];
-        const productsArray: string | ProductResponseApi[] = !Array.isArray(products.data) ? products.data : products.data ?? [];
-        //const productsPages: number = (!Array.isArray(productsArray) || productsArray.length === 0) ? 1 : products.data.total;
-        
-        console.log('Products:', products);
-        console.log('Array Products:', productsArray);
-        return {optionsCategories, productsArray};
+        const optionsCategories: string = categories.ok
+            ? categories.data.map((category) => `{"label":"${category.name}","type":"checkbox","checked":false}`).join(',')
+            : `{"label": "No fue posible cargar las categorías", "type": "checkbox", "checked": false}`;
+
+        const productsData: ProductResponseApi | string = products.ok ? products.data : products.data;
+
+        return { optionsCategories, productsData };
     }
 
     /**
      * Se ejecuta cuando el componente se inserta en el DOM.
      */
     connectedCallback() {
-        this.classList.add('contact-page');
         this.render();
     }
 
@@ -60,15 +61,16 @@ export class HomePage extends HTMLElement {
         const spinner = document.createElement('spinner-component');
         this.appendChild(spinner);
 
-        const {optionsCategories, productsArray} = await this.loadData(10, page);
-        const template = new Template(this, title, optionsCategories, productsArray, page);
-        template.render();
+        const { optionsCategories, productsData } = await this.loadData(10, page);
+        const loadStatus = typeof productsData === 'string' ? LoadStatus.ERROR : LoadStatus.SUCCESS;
 
+        const template = new Template(this, title, optionsCategories, productsData, page, loadStatus);
+        template.render();
 
         const pagination = this.querySelector('pagination-nav');
         pagination?.addEventListener('page-change', (event) => {
-            const { page } = (event as CustomEvent).detail;
-            this.render(page);
+            const { page: nextPage } = (event as CustomEvent<{ page: number }>).detail;
+            this.render(nextPage);
         });
     }
 }

@@ -1,14 +1,14 @@
-import type { ResponseInterface } from "../interfaces/responseInterface";
+import type { ApiError, ResponseInterface } from "../interfaces/responseInterface";
 
-const BASE_URL = 'https://dummyjson.com';
+const BASE_URL = 'https://dummyjson.col';
 
-const buildErrorResponse = (message: string, status = 500): ResponseInterface => ({
+const buildErrorResponse = (message: string, status = 500): ApiError => ({
   data: message,
   ok: false,
   status,
 });
 
-export const apiClient = async (endpoint: string, options: RequestInit = {}): Promise<ResponseInterface> => {
+export const apiClient = async <T,>(endpoint: string, options: RequestInit = {}): Promise<ResponseInterface<T>> => {
   try {
     const url = `${BASE_URL}${endpoint}`;
 
@@ -26,14 +26,13 @@ export const apiClient = async (endpoint: string, options: RequestInit = {}): Pr
       });
     }
 
-    const responseData = await response.json();
+    const responseData = (await response.json()) as T;
 
     return {
-      ...responseData,
       data: responseData,
       ok: true,
       status: response.status,
-    } as ResponseInterface;
+    } as ResponseInterface<T>;
   } catch (error) {
     const status = error instanceof Error && 'status' in error && typeof error.status === 'number'
       ? error.status
