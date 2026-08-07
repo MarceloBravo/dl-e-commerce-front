@@ -1,6 +1,6 @@
 import type { ApiError, ResponseInterface } from "../interfaces/responseInterface";
 
-const BASE_URL = 'https://dummyjson.col';
+const BASE_URL = 'https://dummyjson.com';
 
 const buildErrorResponse = (message: string, status = 500): ApiError => ({
   data: message,

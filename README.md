@@ -25,18 +25,13 @@ e-commerce-front/
     ├── main.ts                 # Punto de entrada: router + navegación
     ├── router.ts               # Enrutado SPA sin recarga de página
     ├── style.css               # Estilos globales
-    ├── counter.ts
     ├── api/
     │   └── apiClient.ts        # Cliente HTTP (fetch + manejo de errores)
     ├── services/               # Consumo de la API asíncrona
     │   ├── productService.ts
     │   └── categoriesService.ts
     ├── models/                 # Modelos de dominio
-    │   ├── Product.ts
-    │   ├── Cart.ts
-    │   ├── CartItems.ts
-    │   ├── Category.ts
-    │   └── Mark.ts
+    │   └── Product.ts
     ├── interfaces/             # Contratos de datos (API y UI)
     │   ├── responseInterface.ts
     │   ├── productResponseApi.ts
@@ -45,11 +40,9 @@ e-commerce-front/
     │   ├── links.ts
     │   ├── metaData.ts
     │   ├── dimensions.ts
-    │   ├── reviews.ts
-    │   └── msgErrors.ts
+    │   └── reviews.ts
     ├── enum/                   # Control de estados de la interfaz
     │   ├── inputTypeEnum.ts
-    │   ├── classTypeEnum.ts
     │   └── loadStatusEnum.ts
     ├── components/             # Web Components reutilizables
     │   ├── index.ts
