@@ -58,6 +58,7 @@ e-commerce-front/
     │   ├── index.ts
     │   ├── appLayout/          # Layout principal (navbar + router-outlet)
     │   ├── home/               # Catálogo de productos
+    │   ├── 404/                # Página 404
     │   └── contact/            # Formulario de contacto validado
     └── utils/
         ├── validations.ts      # Validaciones (email, teléfono)

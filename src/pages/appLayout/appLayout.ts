@@ -11,7 +11,7 @@ export class AppLayout extends HTMLElement {
         <nav-bar 
             ShopName="${this.title}" 
             slogan="Encuentra lo mejor para tu hogar"
-            links='[{"title":"Inicio","href":"home"},{"title":"Ofertas","href":"#"},{"title":"Contacto","href":"contact"}]'
+            links='[{"title":"Inicio","href":"home"},{"title":"Ofertas","href":"404"},{"title":"Contacto","href":"contact"}]'
         ></nav-bar>
         <div id="router-outlet"></div>
     `;

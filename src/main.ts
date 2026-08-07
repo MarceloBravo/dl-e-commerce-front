@@ -5,8 +5,9 @@ import { Router } from './router';
 // Mapa de rutas URL 
 const routes = {
   '/': 'home-page',
+  '/home': 'home-page',
   '/contact': 'contact-page',
-  '404': 'home-page' // Ruta por defecto
+  '/404': 'page-404' 
 };
 
 // Inicializar el router 
